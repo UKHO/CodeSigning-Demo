@@ -18,9 +18,6 @@ steps:
       $certCollection.Import($kvSecretBytes,$null,[System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::Exportable)
       $protectedCertificateBytes = $certCollection.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Pkcs12, "$(password)")
       [System.IO.File]::WriteAllBytes("$(pfxLocation)", $protectedCertificateBytes)      
-      # List the thumbprint of the PFX
-      $securePassword = ConvertTo-SecureString $(password) -AsPlainText -Force
-      Get-PfxCertificate -FilePath "$(pfxLocation)" -Password $securePassword 
     env:
       password : $(password)
     displayName: Convert Secret into PFX
