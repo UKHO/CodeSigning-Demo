@@ -11,6 +11,7 @@ steps:
       keyVaultName: 'UKHOKeyvault'
       secretsFilter: "UKHOCodeSigningCert"
     displayName: Download secrets from Azure Key Vault
+  - powershell: ./generatePfx.ps1
   - powershell: |
       # The certificate is downloaded from Key Vault as a string. Convert it into a PFX, password protect it and write to disk
       $kvSecretBytes = [System.Convert]::FromBase64String('$(UKHOCodeSigningCert)')
