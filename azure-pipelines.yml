@@ -27,4 +27,4 @@ steps:
   - task: PublishPipelineArtifact@0
     inputs:
       artifactName: SignedDll
-      targetPath: $(Build.SourcesDirectory)\src\bin\Debug\netcoreapp2.2\CodeSigning-Demo.dll
+      targetPath: $(Build.SourcesDirectory)\src\bin\Debug\netcoreapp2.2
