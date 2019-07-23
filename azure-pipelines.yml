@@ -27,4 +27,4 @@ steps:
   - task: PublishBuildArtifacts@1
     inputs:
       artifactName: SignedDll
-      pathtoPublish: $(Build.SourcesDirectory)\src\bin\Debug\netcoreapp2.2
+      pathtoPublish: $(Build.SourcesDirectory)\src\bin\Debug\netcoreapp2.2\CodeSigning-Demo.dll
