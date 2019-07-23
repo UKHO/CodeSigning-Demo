@@ -1,0 +1,42 @@
+variables:
+  pfxLocation : $(system.DefaultWorkingDirectory)/cert.pfx
+
+pool:
+  vmimage: windows-latest
+
+workspace:
+    clean: all
+    
+steps:
+  - powershell: dotnet build ./src
+    displayName: Build Source Code
+    
+  - task: AzureKeyVault@1
+    inputs:
+      azureSubscription: '$(AzureSubscription)'
+      keyVaultName: $(keyVaultName) # Set as secret variable
+      secretsFilter: $(secretsFilter) # Set as secret variable
+    displayName: Download certificate from Azure Key Vault
+    
+  - powershell: |
+      ./generatePfx.ps1 `
+        -pfxString $(UKHOCodeSigningCert) 
+    env:
+      pfxPassword : $(password) # Set as secret variable
+    displayName: Generate PFX
+    
+  - powershell: |
+      ./sign.ps1 `
+        -pfxPath $(pfxLocation)
+    env:
+      pfxPassword : $(password) # Set as secret variable
+    displayName: Sign DLLs and exe
+    
+  - task: PublishBuildArtifacts@1
+    inputs:
+      artifactName: SignedDll
+      pathtoPublish: $(Build.SourcesDirectory)\src\bin\Debug\netcoreapp2.2\CodeSigning-Demo.dll
+      
+  - task: DeleteFiles@1
+    inputs:
+      contents: \*.pfx
