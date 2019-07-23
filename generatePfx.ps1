@@ -5,7 +5,7 @@ param
 )
 
 if(-not(Test-Path env:$pfxPasswordVariableName)){
-    $errorMessage = "$pfxPasswordVariableName does not exist as an environment variable. This needs to be set and contain the password for PFX"
+    $errorMessage = "$pfxPasswordVariableName does not exist as an environment variable. This needs to be set and contain the intended password for PFX"
     Write-Host $errorMessage
     Write-Host "##vso[task.logissue type=error]$errorMessage"
     exit 1
