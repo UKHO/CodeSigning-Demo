@@ -1,17 +1,26 @@
+variables:
+  pfxLocation : $(system.DefaultWorkingDirectory)/cert.pfx
+
 pool: General
 
 steps:
+  - powershell: dotnet build ./src
   - task: AzureKeyVault@1
     inputs:
       azureSubscription: 'Azure Live'
       keyVaultName: 'UKHOKeyvault'
       secretsFilter: "UKHOCodeSigningCert"
+    displayName: Download secrets from Azure Key Vault
   - powershell: |
+      # The certificate is downloaded from Key Vault as a string. Convert it into a PFX, password protect it and write to disk
       $kvSecretBytes = [System.Convert]::FromBase64String('$(UKHOCodeSigningCert)')
       $certCollection = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2Collection 
       $certCollection.Import($kvSecretBytes,$null,[System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::Exportable)
       $protectedCertificateBytes = $certCollection.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Pkcs12, $password)
-      [System.IO.File]::WriteAllBytes("$(system.DefaultWorkingDirectory)/cert.pfx", $protectedCertificateBytes)
-      Get-PfxCertificate -FilePath $(system.DefaultWorkingDirectory)/cert.pfx
+      [System.IO.File]::WriteAllBytes("$(pfxLocation)", $protectedCertificateBytes)      
+      # List the thumbprint of the PFX
+      Get-PfxCertificate -FilePath $(pfxLocation)
     env:
       password : $(password)
+    displayName: Convert Secret into PFX
+  - powershell: ./sign.ps1 -pfxPath $pfxPath
