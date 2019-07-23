@@ -19,7 +19,7 @@ steps:
       pfxPassword : $(password)
     displayName: Generate PFX
   - powershell: |
-      ./sign.ps1 
+      ./sign.ps1 `
         -pfxPath $(pfxLocation)
     env:
       pfxPassword : $(password)
