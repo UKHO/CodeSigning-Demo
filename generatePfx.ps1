@@ -5,13 +5,11 @@ param
     $pfxOutLocation = "$env:Build_SourcesDirectory\CodeSignCert.pfx"
 )
 
-#SetBetterDefault for password
-
 Write-Host "`$pfxPasswordVariableName set to $pfxPasswordVariableName"
 Write-Host "`$pfxOutLocation` set to $pfxOutLocation"
 
 if(-not(Test-Path env:$pfxPasswordVariableName)){
-    $errorMessage = "$pfxPasswordVariableName does not exist as an environment variable. This needs to be set and contain the intended password for PFX"
+    $errorMessage = "$pfxPasswordVariableName does not exist as an environment variable. This needs to be set and contain the intended password for the PFX"
     Write-Host $errorMessage
     Write-Host "##vso[task.logissue type=error]$errorMessage"
     exit 1
@@ -23,5 +21,10 @@ $certCollection.Import($kvSecretBytes,$null,[System.Security.Cryptography.X509Ce
 $protectedCertificateBytes = $certCollection.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Pkcs12, "$env:password")
 [System.IO.File]::WriteAllBytes("$pfxOutLocation", $protectedCertificateBytes)
 
+Write-Host
 Write-Host "PFX created at $pfxOutLocation"
 Write-Host "##vso[task.setvariable variable=pfxLocation;]$pfxOutLocation"
+Write-Host
+Write-Host "Location of the PFX is now available as both an environmental variable or build variable"
+Write-Host "Environment variable - `$env:pfxLocation"
+Write-Host "Build variable - $(pfxLocation) "
