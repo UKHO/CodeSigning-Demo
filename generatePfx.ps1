@@ -15,11 +15,6 @@ if(-not(Test-Path env:$pfxPasswordVariableName)){
     exit 1
 }
 
-New-Item env:\$someVariable -Value "some kind of value"
-Get-Item env:\$var -Value
-
-gci env:
-
 $kvSecretBytes = [System.Convert]::FromBase64String("$pfxString")
 $certCollection = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2Collection 
 $certCollection.Import($kvSecretBytes,$null,[System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::Exportable)
