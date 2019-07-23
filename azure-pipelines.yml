@@ -8,10 +8,10 @@ steps:
       secretsFilter: "UKHOCodeSigningCert"
   - powershell: |
       $kvSecretBytes = [System.Convert]::FromBase64String('$(UKHOCodeSigningCert)')
-      write-host $kvSecretBytes
       $certCollection = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2Collection 
       $certCollection.Import($kvSecretBytes,$null,[System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::Exportable)
       $protectedCertificateBytes = $certCollection.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Pkcs12, $password)
-      [System.IO.File]::WriteAllBytes("$(system.DefaultWorkingDirectory)/cert.pfx", $protectedCertificateBytes)
+      [System.IO.File]::WriteAllBytes($(system.DefaultWorkingDirectory)/cert.pfx, $protectedCertificateBytes)
+      Get-PfxCertificate -FilePath $(system.DefaultWorkingDirectory)/cert.pfx
     env:
       password : $(password)
