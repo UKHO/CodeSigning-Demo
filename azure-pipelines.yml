@@ -1,0 +1,8 @@
+pool: General
+
+steps:
+  - task: AzureKeyVault@1
+    inputs:
+      azureSubscription: 'Azure Live'
+      keyVaultName: 'UKHOKeyvault'
+      secretsFilter: "UKHOCodeSigningCert"
