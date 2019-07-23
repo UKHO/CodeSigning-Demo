@@ -11,9 +11,13 @@ steps:
       keyVaultName: 'UKHOKeyvault'
       secretsFilter: "UKHOCodeSigningCert"
     displayName: Download secrets from Azure Key Vault
-  - powershell: ./generatePfx.ps1 -pfxString $(UKHOCodeSigningCert) -pfxOutLocation $(pfxLocation)
+  - powershell: |
+      ./generatePfx.ps1 `
+        -pfxString $(UKHOCodeSigningCert) `
+        -pfxPasswordVariableName password1
     env:
       password : $(password)
+    displayName: Generate PFX
   - powershell: ./sign.ps1 -pfxPath $pfxPath
 
   # - powershell: |
