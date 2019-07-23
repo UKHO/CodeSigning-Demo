@@ -1,7 +1,11 @@
-param($pfxString)
+param
+(
+    $pfxString,
+    $pfxPasswordVariableName = "Password" # See for details on why not passing string - https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables
+)
 
-if(-not(Test-Path env:Password)){
-    $errorMessage = "Password does not exist as an environment variable. Cannot generate PFX without a password to set for the PFX"
+if(-not(Test-Path env:$pfxPasswordVariableName)){
+    $errorMessage = "$pfxPasswordVariableName does not exist as an environment variable. This needs to be set and contain the password for PFX"
     Write-Host $errorMessage
     Write-Host "##vso[task.logissue type=error]$errorMessage"
     exit 1
