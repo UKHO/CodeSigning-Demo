@@ -19,4 +19,6 @@ steps:
       pfxPassword : $(password)
     displayName: Generate PFX
   - powershell: ./sign.ps1 -pfxPath $pfxPath
+    env:
+      pfxPassword : $(password)
     displayName: Sign DLLs and exe
