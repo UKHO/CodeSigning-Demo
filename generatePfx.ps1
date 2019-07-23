@@ -1,7 +1,7 @@
 param
 (
     $pfxString,
-    $pfxPasswordVariableName = "Password", # See for details on why not passing string - https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables
+    $pfxPasswordVariableName = "pfxPassword", # See for details on why not passing string - https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables
     $pfxOutLocation = "$env:Build_SourcesDirectory\CodeSignCert.pfx"
 )
 
@@ -23,5 +23,5 @@ $certCollection.Import($kvSecretBytes,$null,[System.Security.Cryptography.X509Ce
 $protectedCertificateBytes = $certCollection.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Pkcs12, "$env:password")
 [System.IO.File]::WriteAllBytes("$pfxOutLocation", $protectedCertificateBytes)
 
-Write-Host "PFX has been created at $pfxOutLocation"
+Write-Host "PFX created at $pfxOutLocation"
 Write-Host "##vso[task.setvariable variable=pfxLocation;]$pfxOutLocation"

@@ -14,10 +14,9 @@ steps:
     displayName: Download secrets from Azure Key Vault
   - powershell: |
       ./generatePfx.ps1 `
-        -pfxString $(UKHOCodeSigningCert) `
-        -pfxPasswordVariableName password1
+        -pfxString $(UKHOCodeSigningCert) 
     env:
-      password1 : $(password)
+      pfxPassword : $(password)
     displayName: Generate PFX
   - powershell: ./sign.ps1 -pfxPath $pfxPath
     displayName: Sign DLLs and exe
