@@ -1,6 +1,6 @@
 param($pfxString)
 
-if(-not(Test-Path env:Password1)){
+if(-not(Test-Path env:Password)){
     $errorMessage = "Password does not exist as an environment variable. Cannot generate PFX without a password to set for the PFX"
     Write-Host $errorMessage
     Write-Host "##vso[task.logissue type=error]$errorMessage"
