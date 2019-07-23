@@ -1,7 +1,15 @@
 param($pfxString)
 
+if(-not(Test-Path env:Password1)){
+    $errorMessage = "Password does not exist as an environment variable. Cannot generate PFX without a password to set for the PFX"
+    Write-Host $errorMessage
+    Write-Host "##vso[task.logissue type=error]$errorMessage"
+    exit 1
+}
+
 # Check existence of password
 # Set outlocation
+# Set password
 
 $pfxOutLocation = "$env:Build_SourcesDirectory\CodeSignCert.pfx"
 Write-Host "PFX will be written to $pfxOutLocation"
@@ -12,4 +20,5 @@ $certCollection.Import($kvSecretBytes,$null,[System.Security.Cryptography.X509Ce
 $protectedCertificateBytes = $certCollection.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Pkcs12, "$env:password")
 [System.IO.File]::WriteAllBytes("$pfxOutLocation", $protectedCertificateBytes)
 
+Write-Host "PFX has been created at $pfxOutLocation"
 Write-Host "##vso[task.setvariable variable=pfxLocation;]$pfxOutLocation"

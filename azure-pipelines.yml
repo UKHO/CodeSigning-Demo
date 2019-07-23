@@ -14,8 +14,6 @@ steps:
   - powershell: ./generatePfx.ps1 -pfxString $(UKHOCodeSigningCert) -pfxOutLocation $(pfxLocation)
     env:
       password : $(password)
-  - powershell: Write-Host "Outside task $env:pfxLocation"
-  - powershell: Write-Host "Outside task2 $(pfxLocation)"
   - powershell: ./sign.ps1 -pfxPath $pfxPath
 
   # - powershell: |
