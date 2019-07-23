@@ -24,5 +24,7 @@ steps:
     env:
       pfxPassword : $(password)
     displayName: Sign DLLs and exe
-  - publish: $(Build.SourcesDirectory)\src\bin\Debug\netcoreapp2.2\CodeSigning-Demo.dll
-    artifact: SignedDll
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: SignedDll
+      targetPath: $(Build.SourcesDirectory)\src\bin\Debug\netcoreapp2.2\CodeSigning-Demo.dll
