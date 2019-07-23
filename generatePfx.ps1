@@ -20,7 +20,7 @@ gci env:
 $kvSecretBytes = [System.Convert]::FromBase64String("$pfxString")
 $certCollection = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2Collection 
 $certCollection.Import($kvSecretBytes,$null,[System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::Exportable)
-$protectedCertificateBytes = $certCollection.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Pkcs12, "${env:$pfxPasswordVariableName}")
+$protectedCertificateBytes = $certCollection.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Pkcs12, "${env:pfxPassword}")
 [System.IO.File]::WriteAllBytes("$pfxOutLocation", $protectedCertificateBytes)
 
 Write-Host
