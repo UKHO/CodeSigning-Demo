@@ -27,4 +27,4 @@ Write-Host "##vso[task.setvariable variable=pfxLocation;]$pfxOutLocation"
 Write-Host
 Write-Host "Location of the PFX is now available as both an environmental variable or build variable"
 Write-Host "Environment variable - `$env:pfxLocation"
-Write-Host "Build variable - $(pfxLocation) "
+Write-Host "Build variable - `$(pfxLocation) "
