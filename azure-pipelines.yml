@@ -1,14 +1,14 @@
 variables:
   pfxLocation : $(system.DefaultWorkingDirectory)/cert.pfx
 
-pool: General
+pool: UKHO Windows 2019
 
 steps:
   - powershell: dotnet build ./src
     displayName: Build Source Code
   - task: AzureKeyVault@1
     inputs:
-      azureSubscription: 'Azure Live'
+      azureSubscription: 'ALM Key Vault'
       keyVaultName: 'UKHOKeyvault'
       secretsFilter: "UKHOCodeSigningCert"
     displayName: Download secrets from Azure Key Vault
