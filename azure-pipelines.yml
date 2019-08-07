@@ -28,12 +28,6 @@ steps:
     inputs:
       artifactName: SignedDll
       pathtoPublish: $(Build.SourcesDirectory)\src\bin\Debug\netcoreapp2.2\CodeSigning-Demo.dll
-  - powershell: |
-      cd $(system.DefaultWorkingDirectory)
-      ls
   - task: DeleteFiles@1
     inputs:
       contents: \*.pfx
-  - powershell: |
-      cd $(system.DefaultWorkingDirectory)
-      ls
