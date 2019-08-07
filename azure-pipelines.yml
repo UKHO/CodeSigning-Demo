@@ -8,8 +8,8 @@ steps:
     displayName: Build Source Code
   - task: AzureKeyVault@1
     inputs:
-      azureSubscription: $(sn)
-      keyVaultName: 'UKHOKeyvault'
+      azureSubscription: ALM Key Vault
+      keyVaultName: $(sn)
       secretsFilter: "UKHOCodeSigningCert"
     env:
       sn : $(subscriptionName)
