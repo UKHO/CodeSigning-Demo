@@ -8,9 +8,11 @@ steps:
     displayName: Build Source Code
   - task: AzureKeyVault@1
     inputs:
-      azureSubscription: $(subscriptionName)
+      azureSubscription: $(sn)
       keyVaultName: 'UKHOKeyvault'
       secretsFilter: "UKHOCodeSigningCert"
+    env:
+      sn=$(subscriptionName)
     displayName: Download secrets from Azure Key Vault
   - powershell: |
       ./generatePfx.ps1 `
