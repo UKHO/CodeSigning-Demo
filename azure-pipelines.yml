@@ -30,4 +30,4 @@ steps:
       pathtoPublish: $(Build.SourcesDirectory)\src\bin\Debug\netcoreapp2.2\CodeSigning-Demo.dll
   - task: DeleteFiles@1
     inputs:
-      contents: $(pfxLocation)
+      contents: "madeuppath.txt"
