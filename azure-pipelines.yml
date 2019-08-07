@@ -3,6 +3,9 @@ variables:
 
 pool: UKHO Windows 2019
 
+workspace:
+    clean: all
+    
 steps:
   - powershell: dotnet build ./src
     displayName: Build Source Code
