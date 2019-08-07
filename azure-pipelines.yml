@@ -9,7 +9,7 @@ steps:
   - task: AzureKeyVault@1
     inputs:
       azureSubscription: ALM Key Vault
-      keyVaultName: $(subscriptionName)
+      keyVaultName: $(keyVaultName)
       secretsFilter: "UKHOCodeSigningCert"
     displayName: Download secrets from Azure Key Vault
   - powershell: |
