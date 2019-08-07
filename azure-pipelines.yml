@@ -33,7 +33,7 @@ steps:
       ls
   - task: DeleteFiles@1
     inputs:
-      contents: $(pfxLocation)
+      contents: \*.pfx
   - powershell: |
       cd $(system.DefaultWorkingDirectory)
       ls
