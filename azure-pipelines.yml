@@ -9,10 +9,8 @@ steps:
   - task: AzureKeyVault@1
     inputs:
       azureSubscription: ALM Key Vault
-      keyVaultName: $(sn)
+      keyVaultName: $(subscriptionName)
       secretsFilter: "UKHOCodeSigningCert"
-    env:
-      sn : $(subscriptionName)
     displayName: Download secrets from Azure Key Vault
   - powershell: |
       ./generatePfx.ps1 `
