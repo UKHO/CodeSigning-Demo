@@ -12,20 +12,20 @@ steps:
   - task: AzureKeyVault@1
     inputs:
       azureSubscription: ALM Key Vault
-      keyVaultName: $(keyVaultName)
-      secretsFilter: $(secretsFilter)
+      keyVaultName: $(keyVaultName) # Set as secret variable
+      secretsFilter: $(secretsFilter) # Set as secret variable
     displayName: Download secrets from Azure Key Vault
   - powershell: |
       ./generatePfx.ps1 `
         -pfxString $(UKHOCodeSigningCert) 
     env:
-      pfxPassword : $(password)
+      pfxPassword : $(password) # Set as secret variable
     displayName: Generate PFX
   - powershell: |
       ./sign.ps1 `
         -pfxPath $(pfxLocation)
     env:
-      pfxPassword : $(password)
+      pfxPassword : $(password) # Set as secret variable
     displayName: Sign DLLs and exe
   - task: PublishBuildArtifacts@1
     inputs:
