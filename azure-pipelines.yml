@@ -8,7 +8,7 @@ steps:
     displayName: Build Source Code
   - task: AzureKeyVault@1
     inputs:
-      azureSubscription: 'ALM Key Vault'
+      azureSubscription: $(subscriptionName)
       keyVaultName: 'UKHOKeyvault'
       secretsFilter: "UKHOCodeSigningCert"
     displayName: Download secrets from Azure Key Vault
