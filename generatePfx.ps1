@@ -1,8 +1,8 @@
 param
 (
-    $pfxString,
-    $pfxPasswordVariableName = "pfxPassword", # See for details on why not passing string - https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables
-    $pfxOutLocation = "$env:Build_SourcesDirectory\CodeSignCert.pfx"
+    [string] $pfxString,
+    [string] $pfxPasswordVariableName = "pfxPassword", # See for details on why not passing string - https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables
+    [string] $pfxOutLocation = "$env:Build_SourcesDirectory\CodeSignCert.pfx"
 )
 
 Write-Host "`$pfxPasswordVariableName set to $pfxPasswordVariableName"
